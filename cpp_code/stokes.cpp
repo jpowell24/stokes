@@ -6,9 +6,9 @@
 #include <vector>
 #include <algorithm>
 #include <random>
-#include <Eigen/Dense>
+// #include <Eigen/Dense>
 
-using namespace Eigen;
+// using namespace Eigen;
 using namespace std;
 
 const char *path1="data_files/plot.csv";
