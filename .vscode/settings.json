@@ -18,6 +18,7 @@
         "vector": "cpp",
         "ostream": "cpp",
         "ctime": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "fstream": "cpp"
     }
 }
