@@ -12,7 +12,7 @@
 // using namespace Eigen;
 using namespace std;
 
-const char *path1="../data_files/randomwalk2d.csv";
+const char *path1="../data_files/circularlatticewalk.csv";
 
 double calculate_diffusion(double time_Duration, double delta_T, double delta_Position){
     ofstream create_file(path1);
@@ -26,8 +26,8 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
     double delta_Y = 0; // amount that y position changes by
 
 
-    double start_X = (total_Space/2) - 1;  
-    double start_Y = (total_Space/2) - 1;
+    double start_X = 0;
+    double start_Y = 0;
 
     double temp_X = start_X; // variable to store object position in x
     double temp_Y = start_Y; // variable to store object position in y
@@ -45,7 +45,7 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
         delta_X = cos(radian_Random);
         delta_Y = sin(radian_Random);
 
-        cout << delta_X << "," << delta_Y << endl;
+        // cout << delta_X << "," << delta_Y << endl;
 
         temp_X = temp_X + delta_T*(delta_X * delta_Position);
         temp_Y = temp_Y + delta_T*(delta_Y * delta_Position);
@@ -58,7 +58,7 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
 int main(void) {
     cout << "Begin" << endl;
 
-    calculate_diffusion(1000, 1, 1); // enter time in ms, enter delta_T in ms, enter delta_Position in microns
+    calculate_diffusion(10000, 1, 1); // enter time in ms, enter delta_T in ms, enter delta_Position in microns
 
     cout << "End" << endl;
 }
