@@ -14,7 +14,7 @@ using namespace std;
 
 const char *path1="../data_files/circularlatticewalk.csv";
 
-double calculate_diffusion(double time_Duration, double delta_T, double delta_Position){
+double calculate_diffusion(double time_Duration, double delta_T, double delta_Position, int trials){
     ofstream create_file(path1);
     ofstream myfile;
     myfile.open(path1);
@@ -58,7 +58,7 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
 int main(void) {
     cout << "Begin" << endl;
 
-    calculate_diffusion(10000, 1, 1); // enter time in ms, enter delta_T in ms, enter delta_Position in microns
+    calculate_diffusion(1000, 1, 1, 10000); // enter time in ms, enter delta_T in ms, enter delta_Position in microns
 
     cout << "End" << endl;
 }
