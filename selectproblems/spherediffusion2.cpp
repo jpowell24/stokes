@@ -7,9 +7,7 @@
 #include <algorithm>
 #include <random>
 #include <ctime>
-// #include <Eigen/Dense>
 
-// using namespace Eigen;
 using namespace std;
 
 const char *path1="../data_files/spherediffusion2.csv";
