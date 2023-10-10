@@ -83,7 +83,7 @@ double compute_Diffusion(double length, double time_Duration, double delta_T, do
 int main(void) {
   cout << "Begin" << endl;
 
-  compute_Diffusion(1, 10000, 10, 0.01);
+  compute_Diffusion(1, 100000, 10, 0.01);
 
   cout << "End" << endl;
 }
