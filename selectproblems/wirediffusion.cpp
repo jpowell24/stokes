@@ -43,7 +43,7 @@ double compute_Diffusion(double length, double time_Duration, double delta_T, do
     for(int x = 0; x < discrete_Length; x++){
         double scaling_Factor = 0.1; 
         double temp_Loc = length * (x / discrete_Length); 
-        vec_concentations[x] = scaling_Factor * (2 * temp_Loc + 2 * sin(2 * M_PI * temp_Loc) + (3 / 4) * sin(2 * M_PI * temp_Loc));
+        vec_concentations[x] = scaling_Factor * (2 * temp_Loc + 2 * sin(M_PI * temp_Loc) + (3 / 4) * sin(5 * M_PI * temp_Loc));
     }
 
     for(double time_counter = 0; time_counter <= time_Duration; time_counter += delta_T){ 

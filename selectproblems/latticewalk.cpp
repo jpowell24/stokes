@@ -31,12 +31,12 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
     double start_X = 0; // defines starting coordinate as 0,0---but can be any coordinate
     double start_Y = 0;
 
-    // if(trials < 2){ // Changes depending if we are interested in a single path, or many
-    //     myfile << "x,y\n"; // labeling the columns in our excel file
-    // }
-    // else{
-    //     myfile << "x\n";
-    // }
+    if(trials < 2){ // Changes depending if we are interested in a single path, or many
+        myfile << "x,y\n"; // labeling the columns in our excel file
+    }
+    else{
+        myfile << "x\n";
+    }
 
     for(int counter = 0; counter < trials; counter++){ // this is used to run many simulations, for N particles 
 
@@ -78,16 +78,16 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
             squared_X += pow(temp_X,2); // this captures squared X for later
             mean_squared_X = squared_X / (i + 1); // finds mean squared X for this timepoint
 
-            myfile << mean_squared_X << ","; 
+            // myfile << mean_squared_X << ","; 
 
         }
 
-        myfile << "\n"; 
+        //myfile << "\n"; 
         
-        // if(trials > 1){ // used when we are interested in many simulations, and or, the average of X
-        //     average_X = total_X / (time_Duration / delta_T);
-        //     myfile << average_X << "\n"; 
-        // }
+        if(trials > 1){ // used when we are interested in many simulations, and or, the average of X
+            average_X = total_X / (time_Duration / delta_T);
+            myfile << average_X << "\n"; 
+        }
 
     }
 
