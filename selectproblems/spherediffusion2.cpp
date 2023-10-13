@@ -52,7 +52,7 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
     double temp_X = start_X; // variable to store object position in x
     double temp_Y = start_Y; // variable to store object position in y
 
-    myfile << "x,y\n"; // defining x axis
+    myfile << "x,y,t \n"; // defining x axis
     for(double i = 0; i < time_Duration; i += delta_T){
 
         normal_distribution<double> distribution(0,1); // noise gaussian
@@ -64,7 +64,7 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
         double angle_rotation_Random = random(0) * 360; // generate random angle for rotational reorientation
         double radian_rotation_Random = angle_noise_Random * (M_PI / 180);  // convert to radians 
 
-        myfile << temp_X << "," << temp_Y << "\n"; 
+        myfile << temp_X << "," << temp_Y <<  "," << temperature << "\n"; 
 
         // using the reorientation coefficient to reset the orientation
         radian_Random = radian_Random + sqrt(2 * D_r * delta_T) * radian_rotation_Random;
