@@ -90,7 +90,7 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
 int main(void) {
     cout << "Begin" << endl;
 
-    calculate_diffusion(1000, 1, 1, 1); // enter time in ms, enter delta_T in ms, enter delta_Position in microns
+    calculate_diffusion(10000, 1, 1, 1); // enter time in ms, enter delta_T in ms, enter delta_Position in microns
 
     cout << "End" << endl;
 }
