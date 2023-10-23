@@ -23,9 +23,15 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
 
     double delta_X = 0; // amount that x position changes by
     double delta_Y = 0; // amount that y position changes by
+    double delta_Theta = 0; // amount that y position changes by
 
     double start_X = 0;
     double start_Y = 0;
+    double start_Theta = 0;
+
+    double velocity = 2; 
+    double x_velocity = velocity * cos(M_PI); 
+    double y_velocity = velocity * sin(M_PI); 
 
     if(trials < 2){ // Changes depending if we are interested in a single path, or many
         myfile << "x,y,t\n"; // labeling the columns in our excel file
@@ -38,6 +44,7 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
         
         double temp_X = start_X; // variable to store object position in x
         double temp_Y = start_Y; // variable to store object position in y
+        double temp_Theta = start_Theta; // variable to store orientation
         double total_X = 0; 
         double average_X = 0; 
         double squared_X = 0; 
@@ -48,8 +55,10 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
             double mu = 1;
             double a = 1; 
             double Kb = 1.381 * pow(10,-23); 
-            double T = 250 * sin(M_PI * i / 100) + 298; 
+            // double T = 250 * sin(M_PI * i / 100) + 298; 
+            double T = 298; 
             double D_c = (Kb * T) / (6 * M_PI * mu * a); 
+            double D_r = pow((Kb * T) / (6 * M_PI * mu * a), -3); 
 
             if(trials < 2){ // If we are only interested in 1 trials, I'll output the whole path
                 myfile << temp_X << "," << temp_Y << "," << T << "\n"; // writing x and y positions to excel file
@@ -58,15 +67,19 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
             double angle_Random = (float) rand()/RAND_MAX * 360; 
             double radian_Random = angle_Random * (M_PI / 180);  
 
-            radian_Random = radian_Random; 
+            double angle_orientation_Random = (float) rand()/RAND_MAX * 360; 
+            double radian_orientation_Random = angle_orientation_Random * (M_PI / 180);  
 
-            delta_X = cos(radian_Random) * pow(delta_T,0.5) * pow(2 * D_c,0.5);
-            delta_Y = sin(radian_Random) * pow(delta_T,0.5) * pow(2 * D_c,0.5);
+            delta_Theta = radian_orientation_Random * pow(delta_T,0.5) * pow(2 * D_r,0.5);
+            temp_Theta = temp_Theta + delta_Theta;
+
+            delta_X = delta_T * x_velocity * cos(temp_Theta) + cos(radian_Random) * pow(delta_T,0.5) * pow(2 * D_c,0.5);
+            delta_Y = delta_T * y_velocity * sin(temp_Theta) + sin(radian_Random) * pow(delta_T,0.5) * pow(2 * D_c,0.5);
 
             // cout << delta_X << "," << delta_Y << endl;
 
-            temp_X = temp_X + delta_T * (delta_X * delta_Position);
-            temp_Y = temp_Y + delta_T * (delta_Y * delta_Position);
+            temp_X = temp_X + (delta_X * delta_Position);
+            temp_Y = temp_Y + (delta_Y * delta_Position);
         
             total_X += temp_X; // this is used to compute the average X position later
             squared_X += pow(temp_X,2); // this captures squared X for later
@@ -90,7 +103,7 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
 int main(void) {
     cout << "Begin" << endl;
 
-    calculate_diffusion(10000, 1, 1, 1); // enter time in ms, enter delta_T in ms, enter delta_Position in microns
+    calculate_diffusion(1, 0.001, 1, 1); // enter time in ms, enter delta_T in ms, enter delta_Position in microns
 
     cout << "End" << endl;
 }
