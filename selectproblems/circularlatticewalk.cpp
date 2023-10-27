@@ -14,7 +14,7 @@ using namespace std;
 
 const char *path1="../data_files/circularlatticewalk.csv";
 
-double calculate_diffusion(double time_Duration, double delta_T, double delta_Position, int trials){
+double calculate_diffusion(double time_Duration, double delta_T, int trials){
     ofstream create_file(path1);
     ofstream myfile;
     myfile.open(path1);
@@ -29,12 +29,12 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
     double start_Y = 0;
     double start_Theta = 0;
 
-    double velocity = 2; 
-    double x_velocity = velocity * cos(M_PI); 
-    double y_velocity = velocity * sin(M_PI); 
+    double velocity = 10 * pow(10,-6) *  delta_T; 
+    double x_velocity = velocity * cos(1); 
+    double y_velocity = velocity * sin(1); 
 
     if(trials < 2){ // Changes depending if we are interested in a single path, or many
-        myfile << "x,y,t\n"; // labeling the columns in our excel file
+        myfile << "time,x,y,t,squared\n"; // labeling the columns in our excel file
     }
     else{
         myfile << "x\n";
@@ -57,11 +57,12 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
             double Kb = 1.381 * pow(10,-23); 
             // double T = 250 * sin(M_PI * i / 100) + 298; 
             double T = 298; 
-            double D_c = (Kb * T) / (6 * M_PI * mu * a); 
-            double D_r = pow((Kb * T) / (6 * M_PI * mu * a), -3); 
+            // double D_c = (Kb * T) / (6 * M_PI * mu * a); 
+            double D_c = 0.1 * delta_T;
+            double D_r = 0.05 * delta_T; 
 
             if(trials < 2){ // If we are only interested in 1 trials, I'll output the whole path
-                myfile << temp_X << "," << temp_Y << "," << T << "\n"; // writing x and y positions to excel file
+                myfile << i << "," << temp_X << "," << temp_Y << "," << T << "," << squared_X << "\n"; // writing x and y positions to excel file
             }
 
             double angle_Random = (float) rand()/RAND_MAX * 360; 
@@ -71,18 +72,24 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
             double radian_orientation_Random = angle_orientation_Random * (M_PI / 180);  
 
             delta_Theta = radian_orientation_Random * pow(delta_T,0.5) * pow(2 * D_r,0.5);
-            temp_Theta = temp_Theta + delta_Theta;
+            temp_Theta = temp_Theta + (M_PI / 180) + delta_Theta;
+
+            // cout << delta_Theta << " , " << pow(delta_T,0.5) * pow(2 * D_r,0.5) << " , " << D_r << " , " << D_c << endl;
 
             delta_X = delta_T * x_velocity * cos(temp_Theta) + cos(radian_Random) * pow(delta_T,0.5) * pow(2 * D_c,0.5);
             delta_Y = delta_T * y_velocity * sin(temp_Theta) + sin(radian_Random) * pow(delta_T,0.5) * pow(2 * D_c,0.5);
 
+            //delta_X = delta_T * x_velocity * cos(temp_Theta);
+            //delta_Y = delta_T * y_velocity * sin(temp_Theta);
+
             // cout << delta_X << "," << delta_Y << endl;
 
-            temp_X = temp_X + (delta_X * delta_Position);
-            temp_Y = temp_Y + (delta_Y * delta_Position);
+            temp_X = temp_X + (delta_X);
+            temp_Y = temp_Y + (delta_Y);
         
             total_X += temp_X; // this is used to compute the average X position later
-            squared_X += pow(temp_X,2); // this captures squared X for later
+            double postition_Temp = pow(pow(temp_X,2) + pow(temp_Y, 2), 0.5);
+            squared_X = pow(postition_Temp,2); // this captures squared X for later
             mean_squared_X = squared_X / (i + 1); // finds mean squared X for this timepoint
 
             // myfile << mean_squared_X << ","; 
@@ -103,7 +110,7 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
 int main(void) {
     cout << "Begin" << endl;
 
-    calculate_diffusion(1, 0.001, 1, 1); // enter time in ms, enter delta_T in ms, enter delta_Position in microns
+    calculate_diffusion(10, 0.001, 1); // enter time in ms, enter delta_T in ms, enter delta_Position in microns
 
     cout << "End" << endl;
 }

@@ -35,7 +35,7 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
         myfile << "x,y\n"; // labeling the columns in our excel file
     }
     else{
-        myfile << "x\n";
+        myfile << "x,meansquared\n";
     }
 
     for(int counter = 0; counter < trials; counter++){ // this is used to run many simulations, for N particles 
@@ -53,21 +53,22 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
                 myfile << temp_X << "," << temp_Y << "\n"; // writing x and y positions to excel file
             }
 
-            double switch_x_Ramdom = (float) rand()/RAND_MAX; // generate a random number between 0 and 1
-            double switch_y_Ramdom = (float) rand()/RAND_MAX;
+            double switch_Ramdom = (float) rand()/RAND_MAX; // generate a random number between 0 and 1
 
-            if(switch_x_Ramdom > 0.5){ // causing delta_X to increase by 1 if random number is above 0.5
+            if(switch_Ramdom > 0.75){ // causing delta_X to increase by 1 if random number is above 0.5
                 delta_X = 1;
             }
-            else{
+            else if(switch_Ramdom <= 0.75 && switch_Ramdom > 0.5){
                 delta_X = -1;
             }
-
-            if(switch_y_Ramdom > 0.5){ // causing delta_Y to increase by 1 if random number is above 0.5
+            else if(switch_Ramdom <= 0.5 && switch_Ramdom > 0.25){ // causing delta_Y to increase by 1 if random number is above 0.5
                 delta_Y = 1;
             }
-            else{
+            else if(switch_Ramdom <= 0.25){
                 delta_Y = -1;
+            }
+            else{
+                cout << "It's broken" << endl;
             }
 
             // note that delta_Position is a scaling factor, and has no real value here
@@ -86,7 +87,7 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
         
         if(trials > 1){ // used when we are interested in many simulations, and or, the average of X
             average_X = total_X / (time_Duration / delta_T);
-            myfile << average_X << "\n"; 
+            myfile << average_X << "," << mean_squared_X << "\n"; 
         }
 
     }
@@ -97,7 +98,7 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
 
 int main(void) { // I like really short mains :) 
     cout << "Begin" << endl;
-    calculate_diffusion(100, 1, 1, 10000); 
+    calculate_diffusion(1000, 1, 1, 10000); 
     cout << "End" << endl;
 }
 

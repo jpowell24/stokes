@@ -64,8 +64,8 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
 
             // cout << delta_X << "," << delta_Y << endl;
 
-            temp_X = temp_X + delta_T * (delta_X * delta_Position);
-            temp_Y = temp_Y + delta_T * (delta_Y * delta_Position);
+            temp_X = temp_X + delta_T * (delta_X);
+            temp_Y = temp_Y + delta_T * (delta_Y);
         
             total_X += temp_X; // this is used to compute the average X position later
             squared_X += pow(temp_X,2); // this captures squared X for later
@@ -89,7 +89,7 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
 int main(void) {
     cout << "Begin" << endl;
 
-    calculate_diffusion(10, 0.01, 1 * pow(10,-6), 10000); // enter time in s, enter delta_T in s, enter delta_Position in m
+    calculate_diffusion(10, 0.01, 1 * pow(10,-6), 1); // enter time in s, enter delta_T in s, enter delta_Position in m
 
     cout << "End" << endl;
 }
