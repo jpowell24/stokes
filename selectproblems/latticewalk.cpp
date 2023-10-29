@@ -24,10 +24,6 @@ double calculate_diffusion(double time_Duration, double delta_T, double delta_Po
     double delta_X = 0; // amount that x position changes by
     double delta_Y = 0; // amount that y position changes by
 
-
-    // double start_X = (total_Space/2) - 1;  
-    // double start_Y = (total_Space/2) - 1;
-
     double start_X = 0; // defines starting coordinate as 0,0---but can be any coordinate
     double start_Y = 0;
 
