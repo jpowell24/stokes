@@ -29,6 +29,7 @@
         "random": "cpp",
         "core": "cpp",
         "dense": "cpp",
-        "__locale": "cpp"
+        "__locale": "cpp",
+        "algorithm": "cpp"
     }
 }
