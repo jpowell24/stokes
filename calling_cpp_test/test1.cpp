@@ -16,3 +16,20 @@ extern "C" {
 
     }
 }
+
+extern "C" {
+    double* print_array(double *v, int n){
+        for (int i = 0; i < n; i++)
+        {
+            cout << v[i] << ",";
+        }
+        cout << "\n";
+    return (v); 
+    }
+}
+
+extern "C"{
+    void free_memory(int *arr){
+        free(arr);
+    }
+}
