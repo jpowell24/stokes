@@ -7,53 +7,53 @@
 #include <algorithm>
 #include <random>
 
-using namespace std;
+using namespace std;  
 
-const char *path1="../data_files/spherestokes.csv";
+const char *path1="../data_files/spherestokes.csv";  
 
 int make_file(int x){
-    ofstream create_file(path1);
-    ofstream myfile;
-    myfile.open(path1);
+    ofstream create_file(path1);  
+    ofstream myfile;  
+    myfile.open(path1);  
 
-    int x_range, y_range; 
-    double index;
+    int x_range, y_range;   
+    double index;  
 
-    double a = 1; 
-    double U = 1; 
-    double r; 
-    double velocity_x, velocity_y; 
+    double a = 1;   
+    double U = 1;   
+    double r;   
+    double velocity_x, velocity_y;   
 
-    index = 0.1; 
-    x_range = 5;
-    y_range = 5;
+    index = 0.1;   
+    x_range = 5;  
+    y_range = 5;  
 
-    myfile << "i"  << "," << "j" << "," << "u"  << "," << "v" << "\n";
-    for(double i = -0.5*x_range; i <= 0.5*x_range; i += index){
-        for(double j = -0.5*y_range; j <= 0.5*y_range; j += index){
-            r = pow((pow(i,2)*pow(j,2)),0.5);
+    myfile << "i"  << "," << "j" << "," << "u"  << "," << "v" << "\n";  
+    for(double i = -0.5*x_range;   i <= 0.5*x_range;   i += index){
+        for(double j = -0.5*y_range;   j <= 0.5*y_range;   j += index){
+            r = pow((pow(i,2)*pow(j,2)),0.5);  
 
-            velocity_x = (0.75*a)*(U/r + (U*i)/pow(r,3)) + (0.25*pow(a,3))*(U/pow(r,3) - (3*U*i)/(pow(r,5)));
-            velocity_y = (0.75*a)*(U/r + (U*i)/pow(r,3)) + (0.25*pow(a,3))*(U/pow(r,3) - (3*U*i)/(pow(r,5)));
+            velocity_x = (0.75*a)*(U/r + (U*i)/pow(r,3)) + (0.25*pow(a,3))*(U/pow(r,3) - (3*U*i)/(pow(r,5)));  
+            velocity_y = (0.75*a)*(U/r + (U*i)/pow(r,3)) + (0.25*pow(a,3))*(U/pow(r,3) - (3*U*i)/(pow(r,5)));  
 
-            double normalized_x = log(velocity_x);
-            double normalized_y = log(velocity_y);
+            double normalized_x = log(velocity_x);  
+            double normalized_y = log(velocity_y);  
 
             if((pow(pow(i,2) + pow(j,2), 0.5) > a) && velocity_x < 500 && velocity_y < 500){
-                myfile << i  << "," << j << "," << normalized_x  << "," << normalized_y << "\n";
+                myfile << i  << "," << j << "," << normalized_x  << "," << normalized_y << "\n";  
             }
         }
     }
 
-    myfile.close();
+    myfile.close();  
 
-    return(0);
+    return(0);  
 }
 
 int main(void) {
-    cout << "Begin" << endl;
+    cout << "Begin" << endl;  
 
-    make_file(0);
+    make_file(0);  
 
-    cout << "End" << endl;
+    cout << "End" << endl;  
 }
